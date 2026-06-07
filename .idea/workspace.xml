@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0d610563-c16a-4124-9a76-c12d66641f94" name="Changes" comment="implemented Author authentification via x509 certificates">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="0d610563-c16a-4124-9a76-c12d66641f94" name="Changes" comment="added merge resolving for the longest chain">
       <change beforePath="$PROJECT_DIR$/Authorization.py" beforeDir="false" afterPath="$PROJECT_DIR$/Authorization.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Block.py" beforeDir="false" afterPath="$PROJECT_DIR$/Block.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Blockchain.py" beforeDir="false" afterPath="$PROJECT_DIR$/Blockchain.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Node.py" beforeDir="false" afterPath="$PROJECT_DIR$/Node.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -143,7 +143,15 @@
       <option name="project" value="LOCAL" />
       <updated>1780792000367</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="added merge resolving for the longest chain">
+      <option name="closed" value="true" />
+      <created>1780797118035</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1780797118035</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -153,6 +161,7 @@
     <MESSAGE value="Init" />
     <MESSAGE value="added README.md" />
     <MESSAGE value="implemented Author authentification via x509 certificates" />
-    <option name="LAST_COMMIT_MESSAGE" value="implemented Author authentification via x509 certificates" />
+    <MESSAGE value="added merge resolving for the longest chain" />
+    <option name="LAST_COMMIT_MESSAGE" value="added merge resolving for the longest chain" />
   </component>
 </project>
