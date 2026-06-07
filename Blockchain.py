@@ -29,8 +29,9 @@ class Blockchain:
         return sha.hexdigest()
 
     def addBlock(self,payload,signer, publicKeyFilename, prvKeyFilename):
+        timestamp = datetime.datetime.now()
         if self.first is None:
-            timestamp = time()
+
             previousHash = "0" * 64
             ownHash = self.hashBlock(payload, timestamp, previousHash, 0,0)
             self.first = Node(Block(payload, timestamp, previousHash, ownHash, 0,signer, publicKeyFilename, prvKeyFilename))
@@ -42,7 +43,6 @@ class Blockchain:
             while prevNode.next != None:
                 prevNode = prevNode.next
 
-            timestamp = time()
             preciousHash = prevNode.data.ownHash
             index = prevNode.data.index +1
             currNode = Node(Block(payload,
@@ -72,12 +72,18 @@ class Blockchain:
                                                        currNode.data.previousHash,
                                                        currNode.data.index,
                                                        currNode.data.nonce):
+                print("Wrong hash in the following Block:")
+                currNode.data.printBlock()
                 return False
 
             if currNode.data.previousHash != prevBlockHash:
+                print("Wrong previous hash in the following Block:")
+                currNode.data.printBlock()
                 return False
 
             if not currNode.data.verify_signature():
+                print("Error while verifying the signature in the following Block:")
+                currNode.data.printBlock()
                 return False
 
             prevBlockHash = currNode.data.ownHash
@@ -102,6 +108,12 @@ class Blockchain:
             currNode = currNode.next
 
         return currNode
+    
+    def getLength(self):
+        prevNode = self.first
+        while prevNode.next != None:
+            prevNode = prevNode.next
+        return prevNode.data.index +1
 
     def mine(self, difficulty, index):
         starttime = datetime.datetime.now()
@@ -116,5 +128,26 @@ class Blockchain:
         endtime = datetime.datetime.now()
         return endtime - starttime
 
+    def resolve (self, chain_a : Blockchain, chain_b :Blockchain):
+        chain_aLength = chain_a.getLength()
+        chain_bLength = chain_b.getLength()
 
+
+        if(chain_aLength < chain_bLength):
+            if chain_b.isValid() and chain_b.first.data.payload == self.first.data.payload:
+                return chain_b
+
+        if (chain_aLength > chain_bLength):
+            if chain_a.isValid() and chain_a.first.data.payload == self.first.data.payload:
+                return chain_a
+
+        if (chain_aLength == chain_bLength):
+            if chain_a.isValid():
+                return chain_a
+
+            elif chain_b.isValid():
+                return chain_b
+
+            else:
+                return None
 

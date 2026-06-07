@@ -18,16 +18,27 @@ class Authorization:
     def sign(self,payload, prvKeyFilename):
         if isinstance(payload, str):
             payload = payload.encode()  # str -> bytes (UTF-8)
-        with open(self.certFolderPath + prvKeyFilename, "rb") as f:
-            try:
-                private_key = serialization.load_pem_private_key(
-                    f.read(),
-                    password= (getpass.getpass(prompt='Password for signing key: ')).encode(),
-                )
 
-            except ValueError as e:
-                print(e)
-                sys.exit()
+
+
+        with open(self.certFolderPath + prvKeyFilename, "rb") as f:
+
+            key_data = f.read()
+
+            try:
+                # first try without password
+                private_key = serialization.load_pem_private_key(key_data, password=None)
+
+            except TypeError:
+                try:
+                    private_key = serialization.load_pem_private_key(
+                        key_data,
+                        password= (getpass.getpass(prompt='Password for signing key: ')).encode(),
+                    )
+
+                except ValueError as e:
+                    print(e)
+                    sys.exit()
 
 
         signature = private_key.sign(
@@ -43,18 +54,19 @@ class Authorization:
         with open(self.certFolderPath + publicKeyFilename, "rb") as f:
             cert = x509.load_pem_x509_certificate(f.read())
 
-        public_key = cert.public_key()
+        with open(self.certFolderPath + self.caCertName, "rb") as f:
+            ca_cert = x509.load_pem_x509_certificate(f.read())
 
-        # RSA:
+        ca_public_key = ca_cert.public_key()
+
         try:
-            public_key.verify(
-                signature,
-                payload,
+            ca_public_key.verify(
+                cert.signature,
+                cert.tbs_certificate_bytes,
                 padding.PKCS1v15(),
-                hashes.SHA256(),
+                cert.signature_hash_algorithm,
             )
             return True
-
         except InvalidSignature:
             return False
 

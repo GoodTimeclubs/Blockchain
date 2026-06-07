@@ -37,6 +37,9 @@ class Block:
         print("Timestamp:     " + str(self.timestamp))
         print("Previous Hash: " + str(self.previousHash))
         print("Own Hash:      " + str(self.ownHash))
+        print("Signer:        " + str(self.signer))
+        print("Public Key:    " + str(self.publicKeyFilename))
+        print("Private Key:   " + str(self.prvKeyFilename))
         print("")
 
     def sign(self):
