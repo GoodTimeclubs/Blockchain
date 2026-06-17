@@ -39,7 +39,7 @@ bc.addBlock("fertig", "Alice", "alice.cert.pem", "alice.key.pem")
 longest = ba.resolve(bb,bc)
 
 longest.printBlockchain()
-
+print(longest.isValid())
 
 
 
